@@ -73,6 +73,7 @@ $(document).ready(function () {
 });
 
 function hidethestack() {
+    $("#hide-the-welcome").show();
     $("#hide-the-team").hide();
     $("#hide-the-bets").hide();
     $("#hide-the-champs").hide();
