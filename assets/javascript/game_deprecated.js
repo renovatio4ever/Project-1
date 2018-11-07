@@ -48,9 +48,6 @@ var currentplayer
 // setuser();
 
 // Test Harness: Initialization
-
-
-
 $(document).ready(function () {
 
     // simplemask.js masking.. because fat fingering text will goof the generator.
@@ -95,14 +92,6 @@ $(document).ready(function () {
     });
 
 });
-
-function hidethestack() {
-    $("#hide-the-team").hide();
-    $("#hide-the-bets").hide();
-    $("#hide-the-champs").hide();
-}
-
-hidethestack();
 
 // Test Harness: Realtime Calculations and DB Write
 $('input').keyup(function () {
@@ -190,32 +179,4 @@ $("#change-this").click(function () {
     database.ref().update({
         betlock: betlocker
     });
-});
-
-$("#go-to-bets").click(function () {
-    $("#hide-the-welcome").hide();
-    $("#hide-the-team").hide();
-    $("#hide-the-bets").show();
-    $("#hide-the-champs").hide();
-});
-
-$("#go-to-home").click(function () {
-    $("#hide-the-welcome").show();
-    $("#hide-the-team").hide();
-    $("#hide-the-bets").hide();
-    $("#hide-the-champs").hide();
-});
-
-$("#go-to-teams").click(function () {
-    $("#hide-the-welcome").hide();
-    $("#hide-the-team").show();
-    $("#hide-the-bets").hide();
-    $("#hide-the-champs").hide();
-});
-
-$("#go-to-champs").click(function () {
-    $("#hide-the-welcome").hide();
-    $("#hide-the-team").hide();
-    $("#hide-the-bets").hide();
-    $("#hide-the-champs").show();
 });

@@ -48,50 +48,37 @@ var currentplayer
 // setuser();
 
 // Test Harness: Initialization
+
+
+
 $(document).ready(function () {
 
     // simplemask.js masking.. because fat fingering text will goof the generator.
-
+    
     $('#wins-1').simpleMask({
-        'mask': ['###'],
-        'nextInput': $('#wins-2')
-    });
-    $('#wins-2').simpleMask({
-        'mask': ['###'],
-        'nextInput': $('#wins-3')
-    });
-    $('#wins-3').simpleMask({
         'mask': ['###'],
         'nextInput': $('#loss-1')
     });
 
     $('#loss-1').simpleMask({
         'mask': ['###'],
-        'nextInput': $('#loss-2')
-    });
-    $('#loss-2').simpleMask({
-        'mask': ['###'],
-        'nextInput': $('#loss-3')
-    });
-    $('#loss-3').simpleMask({
-        'mask': ['###'],
         'nextInput': $('#draw-1')
     });
-
+  
     $('#draw-1').simpleMask({
-        'mask': ['###'],
-        'nextInput': $('#draw-2')
-    });
-    $('#draw-2').simpleMask({
-        'mask': ['###'],
-        'nextInput': $('#draw-3')
-    });
-    $('#draw-3').simpleMask({
         'mask': ['###'],
         'nextInput': $('#wins-1')
     });
-
+ 
 });
+
+function hidethestack() {
+    $("#hide-the-team").hide();
+    $("#hide-the-bets").hide();
+    $("#hide-the-champs").hide();
+}
+
+hidethestack();
 
 // Test Harness: Realtime Calculations and DB Write
 $('input').keyup(function () {
@@ -106,34 +93,24 @@ function calcbets() {
     loss1 = $("#loss-1").val().trim();
     draw1 = $("#draw-1").val().trim();
 
-    wins2 = $("#wins-2").val().trim();
-    loss2 = $("#loss-2").val().trim();
-    draw2 = $("#draw-2").val().trim();
-
-    wins3 = $("#wins-3").val().trim();
-    loss3 = $("#loss-3").val().trim();
-    draw3 = $("#draw-3").val().trim();
 
     // console.log(wins1 + " " + loss1 + " " + draw1);
 
     // team1earn = ((wins1 + loss1 + draw1) * odds1);
     //If stats change do this: ((wins + loss + draw)* odds)
     team1earn = parseInt(wins1) + parseInt(loss1) + parseInt(draw1);
-    team2earn = parseInt(wins2) + parseInt(loss2) + parseInt(draw2);
-    team3earn = parseInt(wins3) + parseInt(loss3) + parseInt(draw3);
+  
 
     // console.log("Team Earnings " + team1earn)
 
-    totalbets = team1earn + team2earn + team3earn
+    totalbets = team1earn
     // console.log("Total Bets " + totalbets)
 
     tokensearned = totaltokens - totalbets
     // console.log("Total Tokens Earned " + tokensearned)
 
     $("#earn-1").text(team1earn);
-    $("#earn-2").text(team2earn);
-    $("#earn-3").text(team3earn);
-
+ 
     $("#totalearnings").text(totalbets);
     $("#tokens-earned").text(tokensearned);
 
@@ -141,8 +118,6 @@ function calcbets() {
     database.ref().update({
         t_token: tokensearned,
         t1_earn: team1earn,
-        t2_earn: team2earn,
-        t3_earn: team3earn,
         t_earnings: totalbets
     });
 }
@@ -152,9 +127,6 @@ function overbet() {
         $(':input').val(0);
 
         $("#earn-1").text(0);
-        $("#earn-2").text(0);
-        $("#earn-3").text(0);
-        // prompt warning
         $("#totalearnings").text(0);
         $("#tokens-earned").text(5000);
     }
@@ -173,10 +145,46 @@ $("#bet-this").click(function () {
     });
 });
 
-$("#change-this").click(function () {
-    betlocker = "False";
-    // insert special FX
-    database.ref().update({
-        betlock: betlocker
-    });
+
+$("#go-bet-now").click(function () {
+    $("#hide-the-welcome").hide();
+    $("#hide-the-team").show();
+    $("#hide-the-bets").hide();
+    $("#hide-the-champs").hide();
 });
+
+$("#go-to-champs").click(function () {
+    $("#hide-the-welcome").hide();
+    $("#hide-the-team").hide();
+    $("#hide-the-bets").hide();
+    $("#hide-the-champs").show();
+});
+
+$("#pick-team-1").click(function () {
+    $("#hide-the-welcome").hide();
+    $("#hide-the-team").hide();
+    $("#hide-the-bets").show();
+    $("#hide-the-champs").hide();
+});
+
+$("#go-back-to-teams").click(function () {
+    $("#hide-the-welcome").hide();
+    $("#hide-the-team").show();
+    $("#hide-the-bets").hide();
+    $("#hide-the-champs").hide();
+});
+
+$("#go-to-home").click(function () {
+    $("#hide-the-welcome").show();
+    $("#hide-the-team").hide();
+    $("#hide-the-bets").hide();
+    $("#hide-the-champs").hide();
+});
+
+$("#go-back-home-now").click(function () {
+    $("#hide-the-welcome").show();
+    $("#hide-the-team").hide();
+    $("#hide-the-bets").hide();
+    $("#hide-the-champs").hide();
+});
+

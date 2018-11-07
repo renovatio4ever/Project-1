@@ -32,7 +32,7 @@ Features: This code was built on JS, HTML, HTML5, CSS, CSS, Bootstrap, Firebase 
       </form> -->
       <div class="user-login form-inline">
           <span class="bet-pot-tokens"><input class="form-control mr-sm-2" type="registration" placeholder="" aria-label="player-alias" id="new-player" value="testuser2018"></span>
-          <span class="bet-pot-amount"><a href="teams.html"><button class="btn btn-primary my-2 my-sm-0 register-me">Play!</button></a></span>
+          <span class="bet-pot-amount"><button class="btn btn-primary my-2 my-sm-0" id="go-bet-now">Play!</button></span>
       </div>
 
     </div>
@@ -40,7 +40,7 @@ Features: This code was built on JS, HTML, HTML5, CSS, CSS, Bootstrap, Firebase 
 
   <!-- NFL Welcome/Splash Container. Visible on load, Invisible during bets  -->
 
-  <div class="nflb-welcome">
+  <div class="nflb-welcome" id="hide-the-welcome">
     <div class="jumbotron">
       <h1 class="display-4">The Dream Team Game</h1>
       <p class="lead">Online Weekly NFL Team Standing Betting.</p>
@@ -49,16 +49,141 @@ Features: This code was built on JS, HTML, HTML5, CSS, CSS, Bootstrap, Firebase 
         rewards are alloted based on odds. Enter in your user ID to place your bets for the week. </p>
       <p class="lead">
       </p>
-      <span class="bet-pot-amount"><a href="leaders.html"><button class="btn btn-primary my-2 my-sm-0 register-me">Leader Boards!</button></a></span>
+      <span class="bet-pot-amount"><button class="btn btn-primary my-2 my-sm-0" id="go-to-champs">Leader Boards!</button></span>
     </div>
   </div>
 
-    <!-- Team Selection DIV   -->
+  <!-- TEAM-SELECTION  -->
+  <!--------------------->
 
-    <!-- Team Bets DIV   -->
+  <div class="nflb-team" id="hide-the-team">
+      <div class="jumbotron">
+          <div class="nflbets-stats">
+              <span class="bet-header">Select Your Teams: Max 6 Per Player</span>
+              <div class="bet-pot">
+                  <span class="bet-pot-tokens">Earned NFL Tokens: </span>
+                  <span class="bet-pot-amount">5000</span>
+              </div>
+          </div>
 
+          <table id="tablePreview" class="table table-hover table-sm">
+              <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>Team</th>
+                      <th>Prev Stats</th>
+                      <th>Odds</th>
+                      <th>Select</th>
+                  </tr>
+              </thead>
+              <tbody>
+
+                  <tr>
+                      <th scope="row">1</th>
+                      <td>Candidate Team 1</td>
+                      <td>5-1-0</td>
+                      <td id=odds-1>2</td>
+                      <td id=place-bets-1><button class="btn btn-primary my-2 my-sm-0" id="pick-team-1">Select</button></td>
+                  </tr>
+              
+              </tbody>
+          </table>
+          <button class="btn btn-primary my-2 my-sm-0" id="go-back-home-now">Back</button>
+          <!-- <button class="btn btn-primary my-2 my-sm-0 resetbets" type="submit">Back</button> -->
+          <p class="lead">
+          </p>
+      </div>
+  </div>
+
+
+
+  <!--    TEAM-BETS    -->
+  <!--------------------->
+
+  <div class="nflb-bets" id="hide-the-bets">
+      <div class="jumbotron">
+        <div class="nflbets-stats">
+        <span class="bet-header">Place Your Token Bets: Max 999 Per Team</span>
+        <div class="bet-pot">
+        <span class="bet-pot-tokens">NFL Tokens Earned: </span>
+        <span class="bet-pot-amount" id="tokens-earned">5000</span>
+        </div>
+        </div>
+        <table id="betting-board" class="table table-hover table-sm">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Team</th>
+                  <th>Prev Stats</th>
+                  <th>Wins</th>
+                  <th>Losses</th>
+                  <th>Draws</th>
+                  <th>Odds</th>
+                  <th>Earnings</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Dallas Cowboys</td>
+                  <td>5-1-0</td>
+                  <td><input class="form-control col-xs-2" id="wins-1" value="0"></td>
+                  <td><input class="form-control col-xs-2" id="loss-1" value="0"></td>
+                  <td><input class="form-control col-xs-2" id="draw-1" value="0"></td>
+                  <td id="odds-1">2</td>
+                  <td id="earn-1">0</td>
+                </tr>
+              <tr>
+                  <th scope="row">Total Earnings</th>
+                  <td id="totalearnings">0</td>
+              </tr>
+              </tbody>
+              </table>
+              <button class="btn btn-primary my-2 my-sm-0" id="go-back-to-teams">Back</button>
+              <button class="btn btn-primary my-2 my-sm-0 place-bets" id="bet-this" type="submit">Lock In Bets</button>
+              <button class="btn btn-primary my-2 my-sm-0 reset-bets" id="reset-this" type="submit">Reset</button>
+        <p class="lead">
+        </p>
+      </div>
+    </div>
+
+
+  <!--    CHAMPION     -->
+  <!--------------------->
+
+  <div class="nflb-champs" id="hide-the-champs">
+      <div class="jumbotron">
+          <div class="nflbets-stats">
+              <p class="lead">LEADER BOARDS</p>
+              <p>Weekly Betting Champions</p>
+          </div> 
+          <table id="tablePreview" class="table table-hover table-sm">
+              <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>Player</th>
+                      <th>Total Earnings</th>
+                      <th>Total Tokens</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <th scope="row">1</th>
+                      <td>Player 1</td>
+                      <td>552,133</td>
+                      <td>1,212,808</td>
+                  </tr>
+              </tbody>
+          </table>
+          <button class="btn btn-primary my-2 my-sm-0" id="go-to-home">Home</button>
+          <p class="lead">
+          </p>
+      </div>
+  </div>
+
+
+  
   <!-- Sticky Footer  -->
-
   <footer class="footer">
     <div class="container">
       <span class="copyright-text">Dream Team Betting LLC &copy;2018</span>
@@ -70,7 +195,9 @@ Features: This code was built on JS, HTML, HTML5, CSS, CSS, Bootstrap, Firebase 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js "></script>
-  <script src="assets/javascript/game.js"></script>
+  <script src="assets/javascript/simplemask.js"></script>
+  <script src="assets/javascript/simplemask.min.js"></script>
+  <script src="assets/javascript/neogame.js"></script>
   
 </body>
 </html>
