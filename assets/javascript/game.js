@@ -1,4 +1,4 @@
-// Author: The Dream Team (Peter Santiago, Brenton Wyman, Ruben Galleguillos, Patrick Mirville)
+// Author: The Dream Team (Peter Santiago, Brenton Wyman, Ruben Galleguillos)
 // Updated: 11.01.2018
 // Purpose: Fantasy Football/Craps Betting Themed Game
 // Features: This code was built on JS, HTML, HTML5, CSS, CSS3, and Bootstrap
@@ -33,47 +33,41 @@ var team1earn, team2earn, team3earn;
 team1earn = team2earn = team3earn = 0;
 
 var totalbets = 0
-var totaltokens = 5000
+var totaltokens = 9000
 var tokensearned = 0
 var totalearnings = 0
 var betlocker = "false"
 var currentplayer
 var gameplayer
 
-function GenerateNFLTeams(){
+    
+function displaynflteams(){
     
     var queryURL = "https://api.fantasydata.net/v3/nfl/scores/JSON/GameStatsByWeek/2018/8?key=ad398993c55d46449bde67a4095fef1b";
 
-    console.log(queryURL); 
+    // console.log(queryURL); 
     $.ajax({
         url: queryURL,
         method: 'GET'
     })
     .done(function(response) {
-        // var results = response.data; 
-        console.log(response)
-        // for (var i=0; i<results.length; i++){
+        var results = response.data; 
+        console.log(response);
 
-        // }
+        if (results == ""){
+          console.log("No NFL Teams Here")
+        }
+   
     });
 }
 
-GenerateNFLTeams();
+displaynflteams();
+
 
 $(document).ready(function () {
 
-    // simplemask.js masking.. because fat fingering text will goof the generator.
-
-    $('#wins-1').simpleMask({'mask': ['###'],'nextInput': $('#loss-1')});
-    $('#loss-1').simpleMask({'mask': ['###'],'nextInput': $('#draw-1')});
-    $('#draw-1').simpleMask({'mask': ['###'],'nextInput': $('#wins-2')});
-    $('#wins-2').simpleMask({'mask': ['###'],'nextInput': $('#loss-2')});
-    $('#loss-2').simpleMask({'mask': ['###'],'nextInput': $('#draw-2')});
-    $('#draw-2').simpleMask({'mask': ['###'],'nextInput': $('#wins-3')});
-    $('#wins-3').simpleMask({'mask': ['###'],'nextInput': $('#loss-3')});
-    $('#loss-3').simpleMask({'mask': ['###'],'nextInput': $('#draw-3')});
-    $('#draw-3').simpleMask({'mask': ['###'],'nextInput': $('#wins-1')});
-
+    $('.bt').simpleMask({'mask': ['###']});
+    
 });
 
 function hidethestack() {
@@ -93,15 +87,6 @@ $('input').keyup(function () {
 
 // Test Harness: Interim Bet Engine
 function calcbets() {
-
-
-    // $("tr").each(function() {
-    //     if ($(this).find(".win")) {
-    //       team1earn = parseInt($(this).find(".win").val().trim())
-    //       team2earn = parseInt($(this).find(".loss").val().trim())
-    //       team3earn = parseInt($(this).find(".draw").val().trim())
-    //     }
-    //   })
     
     wins1 = $("#wins-1").val().trim();
     loss1 = $("#loss-1").val().trim();
@@ -167,14 +152,7 @@ $("#bet-this").click(function () {
 $("#pick-team-1").attr("disabled", true);
 
 $("#go-bet-now").click(function () {
-
-    // ref.child('dream-team-game').orderByChild('player').equalTo('superplayer2018').on("value", function(snapshot) {
-    //     console.log(snapshot.val());
-    //     snapshot.forEach(function(data) {
-    //         console.log(data.key);
-    //     });
-    // });
-
+ 
     $("#game-player").on("keyup change", function () {
         gameplayer = this.value;
     });
@@ -204,24 +182,9 @@ $("#go-to-champs").click(function () {
 });
 
 // Disable Button Count
-$("#pick-team-1").click(function () {
-    $("#pick-team-1").attr("disabled", true);
-});
 
-$("#pick-team-2").click(function () {
-    $("#pick-team-2").attr("disabled", true);
-});
-
-$("#pick-team-3").click(function () {
-    $("#pick-team-3").attr("disabled", true);
-});
-
-$("#pick-team-4").click(function () {
-    $("#pick-team-4").attr("disabled", true);
-});
-
-$("#pick-team-5").click(function () {
-    $("#pick-team-5").attr("disabled", true);
+$(".pb").click(function () {
+    $(this).attr("disabled", true);
 });
 
 // End Series
