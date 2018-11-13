@@ -1,24 +1,27 @@
-function displaynflteams(){
-    
-    var queryURL = "https://api.fantasydata.net/v3/nfl/scores/JSON/GameStatsByWeek/2018/8?key=ad398993c55d46449bde67a4095fef1b";
+function getthenews(){
 
-    console.log(queryURL); 
-    $.ajax({
-        url: queryURL,
-        method: 'GET'
-    })
-    .done(function(response) {
-        var results = response.data; 
-        if (results == ""){
-          alert("There are no responses");
-        }
-        var tr;
-        for (var i=0; i<results.length; i++){
-            tr = $('<tr/>');
-            tr.append("<td>" + data[i].HomeTeam + "</td>");
-            tr.append("<td>" + data[i].AwayScore + "</td>");
-            tr.append("<td>" + data[i].HomeScore + "</td>");
-            $('table').append(tr);
-        }
+    var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+    url += '?' + $.param({
+      'api-key': "b9f91d369ff59547cd47b931d8cbc56b:0:74623931",
+      'q': "NFL",
+      'begin_date': "20170101",
+      'end_date': "20181101",
+      'sort': "newest",
+      'fl': "headline",
+      'facet_field': "article"
     });
+    $.ajax({
+      url: url,
+      method: 'GET',
+    }).done(function(response) {
+      console.log(response);
+      var mydocs = response.docs
+      console.log(mydocs);
+    }).fail(function(err) {
+      throw err;
+    });
+
 }
+     
+getthenews();
+

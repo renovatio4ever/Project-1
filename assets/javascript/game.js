@@ -39,30 +39,59 @@ var totalearnings = 0
 var betlocker = "false"
 var currentplayer
 var gameplayer
+var teamcounter = 0
 
     
 function displaynflteams(){
     
-    var queryURL = "https://api.fantasydata.net/v3/nfl/scores/JSON/GameStatsByWeek/2018/8?key=ad398993c55d46449bde67a4095fef1b";
+        $.ajax({
+            type: "GET",
+            url: "https://api.fantasydata.net/v3/nfl/scores/JSON/GameStatsByWeek/2018/8?key=ad398993c55d46449bde67a4095fef1b",
+            dataType: "json"
+        })
+        .done(function(response) {
+            for (var i = 0; i < 5; i++) {
+            // index, Team, Point Spread, Odds (fixed), Select Button
+            console.log("Away Team: " + response[i].AwayTeam + " Away Score " + response[i].AwayScore + " Home Score " + response[i].HomeScore)
+            // $("#nflteams").append("<tr><th scope=row>" + i + "</th><td>" + response[i].HomeTeam + "</td><td>" + response[i].PointSpread + 
+            // "</td><td id=odds-" + i + "1>2</td><td id=place-bets-" + i + "><button class=btn btn-primary my-2 my-sm-0 pb id=pick-team-" + i + 
+            // ">Select</button></td></tr>")
 
-    // console.log(queryURL); 
-    $.ajax({
-        url: queryURL,
-        method: 'GET'
-    })
-    .done(function(response) {
-        var results = response.data; 
-        console.log(response);
+            $('#nflteams').append("<tr><th scope='row'>" + i + "</th><td>" + response[i].HomeTeam + 
+            "</td><td>" + response[i].PointSpread + "</td><td id='odds-" + i + "'>2</td><td id='place-bets-" + i + 
+            "'><button class='btn btn-primary my-2 my-sm-0 pb' id='pick-team-" + i + "'>Select</button></td></tr>")
+            }
+         })
+    }      
 
-        if (results == ""){
-          console.log("No NFL Teams Here")
+
+    function buildQueryURL() {
+        var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?";
+        var queryParams = { "api-key": "b9f91d369ff59547cd47b931d8cbc56b:0:74623931" };
+        queryParams.q = "NFL";
+        queryParams.begin_date = "20170101";
+        queryParams.end_date = "20180101";
+        return queryURL + $.param(queryParams);
         }
-   
-    });
-}
-
-displaynflteams();
-
+      function updatePage(NFLNews) {
+        var numArticles = 3
+      
+        for (var i = 0; i < numArticles; i++) {
+          var article = NFLNews.response.docs[i];
+          var headline = article.headline;
+          console.log(headline.main)
+          var headlinelink = article.web_url;
+          console.log(headlinelink)
+        }
+    }
+     
+        var queryURL = buildQueryURL();
+      
+        $.ajax({
+          url: queryURL,
+          method: "GET"
+        }).then(updatePage);
+     
 
 $(document).ready(function () {
 
@@ -78,6 +107,8 @@ function hidethestack() {
 }
 
 hidethestack();
+displaynflteams();
+// displaynflnews();
 
 // Test Harness: Realtime Calculations and DB Write
 $('input').keyup(function () {
@@ -185,6 +216,14 @@ $("#go-to-champs").click(function () {
 
 $(".pb").click(function () {
     $(this).attr("disabled", true);
+    teamcounter++
+    console.log("teamcounter " + teamcounter)
+    // if (teamcounter === 3){
+    //     $("#hide-the-welcome").hide();
+    //     $("#hide-the-team").hide();
+    //     $("#hide-the-bets").show();
+    //     $("#hide-the-champs").hide();
+    // }
 });
 
 // End Series
